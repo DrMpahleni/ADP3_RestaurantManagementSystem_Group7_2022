@@ -1,4 +1,4 @@
-// Login page
+// Login page //
 
 package za.ac.cput.views;
 

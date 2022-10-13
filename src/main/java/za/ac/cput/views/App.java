@@ -1,4 +1,4 @@
-//Main application to run application
+//Main code to run application
 
 package za.ac.cput.views;
 
