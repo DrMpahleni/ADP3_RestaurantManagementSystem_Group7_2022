@@ -1,3 +1,5 @@
+// Login page
+
 package za.ac.cput.views;
 
 import javax.swing.*;

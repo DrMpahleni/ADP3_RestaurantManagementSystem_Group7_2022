@@ -1,3 +1,5 @@
+//Main application to run application
+
 package za.ac.cput.views;
 
 public class App {
