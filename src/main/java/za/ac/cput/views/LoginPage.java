@@ -118,7 +118,7 @@ public class LoginPage extends JFrame {
 
                     Statement myStat = myConn.createStatement();
 
-                    String sql = "SELECT Name, Passcode FROM users WHERE Name ='"+Username+"'and Passcode ='"+Password+"'";
+                    String sql = "SELECT user_Name, user_Password FROM user_account WHERE user_Name ='"+Username+"'and user_Password ='"+Password+"'";
 
                     ResultSet result = myStat.executeQuery(sql);
 
@@ -153,7 +153,7 @@ public class LoginPage extends JFrame {
         btnCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                new CreateUserPage();
                 frame.dispose();
             }
         });
