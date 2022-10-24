@@ -125,7 +125,6 @@ public class LoginPage extends JFrame {
                     ResultSet result = myStat.executeQuery(sql);
 
                     if (result.next()){
-                        //new dash();
                         new DashboardPage();
                         frame.dispose();
                         JOptionPane.showMessageDialog(null, "Password correct");
@@ -139,10 +138,6 @@ public class LoginPage extends JFrame {
 
                     myConn.close();
                 }
-
-                catch(Exception ex) {
-                    System.out.println(ex.getMessage());
-
                 catch(SQLException a) {
                     a.printStackTrace();
 
