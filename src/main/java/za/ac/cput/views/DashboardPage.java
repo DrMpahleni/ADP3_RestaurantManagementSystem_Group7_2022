@@ -11,7 +11,7 @@ public class DashboardPage  extends JFrame {
     JPanel pnlNorth, pnlCenter, pnlSouth;
     JLabel lblHeading;
     Box box;
-    JButton btnStaff, btnMenu, btnSupplies, btnOrders, btnReservations, btnRestaurant, btnLock;
+    JButton btnStaff, btnMenu, btnSupplies, btnOrders, btnReservations, btnLock;
     Font ftHead;
 
     public DashboardPage() {
@@ -72,6 +72,7 @@ public class DashboardPage  extends JFrame {
         pnlSouth.add(btnLock);
 
         btnLock.addActionListener(buttonActions());
+        btnMenu.addActionListener(this);
 
         frame.setTitle("Dashboard");
         frame.setSize(1200, 800);
@@ -113,5 +114,13 @@ public class DashboardPage  extends JFrame {
 
     public static void main(String[] args) {
         new DashboardPage();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("Menu")){
+            menuFrame =  new Menu();
+            frame.dispose();
+        }
     }
 }
