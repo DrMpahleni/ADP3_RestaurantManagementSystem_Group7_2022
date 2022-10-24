@@ -19,7 +19,7 @@ public class Supplier implements Serializable {
     private String supplierPhone;
     private String supplierAddress;
 
-    protected Supplier() {
+    public Supplier() {
 
     }
 
