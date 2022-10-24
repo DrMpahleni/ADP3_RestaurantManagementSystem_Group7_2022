@@ -121,10 +121,11 @@ public class LoginPage extends JFrame {
                     Statement myStat = myConn.createStatement();
 
                     String sql = "SELECT user_Name, user_Password FROM user_account WHERE user_Name ='"+Username+"'and user_Password ='"+Password+"'";
-
+                    
                     ResultSet result = myStat.executeQuery(sql);
 
                     if (result.next()){
+                        //new dash();
                         new DashboardPage();
                         frame.dispose();
                         JOptionPane.showMessageDialog(null, "Password correct");
@@ -138,8 +139,13 @@ public class LoginPage extends JFrame {
 
                     myConn.close();
                 }
+
+                catch(Exception ex) {
+                    System.out.println(ex.getMessage());
+
                 catch(SQLException a) {
                     a.printStackTrace();
+
                 }
             }
         });
@@ -155,6 +161,7 @@ public class LoginPage extends JFrame {
         btnCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 new CreateUserPage();
                 frame.dispose();
             }
