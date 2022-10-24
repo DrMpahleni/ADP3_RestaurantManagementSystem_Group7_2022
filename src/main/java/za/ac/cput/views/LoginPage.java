@@ -1,11 +1,6 @@
-/*
-    Position Class
-    Student:Hlumelo Mpotulo
-    Student Number: 215226348
-    Due Date 26 October 2022
- */
-package za.ac.cput.views;
+// Login page //
 
+package za.ac.cput.views;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LoginPage extends JFrame {
@@ -110,12 +106,13 @@ public class LoginPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String url = "jdbc:mysql://localhost:3306/rms";
+                String url = "jdbc:mysql://localhost:3306/thechowloungedb";
                 String user = "root";
                 String pass = "password";
 
                 try{
 
+                    //Class.forName("com.mysql.jdbc.Driver");
                     java.sql.Connection myConn = DriverManager.getConnection(url, user, pass);
 
                     String Username = txtUsername.getText();
@@ -123,12 +120,13 @@ public class LoginPage extends JFrame {
 
                     Statement myStat = myConn.createStatement();
 
-                    String sql = "SELECT Name, Passcode FROM users WHERE Name ='"+Username+"'and Passcode ='"+Password+"'";
-
+                    String sql = "SELECT user_Name, user_Password FROM user_account WHERE user_Name ='"+Username+"'and user_Password ='"+Password+"'";
+                    
                     ResultSet result = myStat.executeQuery(sql);
 
                     if (result.next()){
                         //new dash();
+                        new DashboardPage();
                         frame.dispose();
                         JOptionPane.showMessageDialog(null, "Password correct");
                     }
@@ -141,8 +139,13 @@ public class LoginPage extends JFrame {
 
                     myConn.close();
                 }
+
                 catch(Exception ex) {
                     System.out.println(ex.getMessage());
+
+                catch(SQLException a) {
+                    a.printStackTrace();
+
                 }
             }
         });
@@ -159,6 +162,7 @@ public class LoginPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                new CreateUserPage();
                 frame.dispose();
             }
         });

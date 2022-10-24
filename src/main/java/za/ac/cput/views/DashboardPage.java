@@ -1,20 +1,12 @@
-/*
-    Position Class
-    Student:Hlumelo Mpotulo
-    Student Number: 215226348
-    Due Date 26 October 2022
- */
 package za.ac.cput.views;
-
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DashboardPage  extends JFrame implements ActionListener{
+public class DashboardPage  extends JFrame {
 
-    Menu menuFrame;
     JFrame frame;
     JPanel pnlNorth, pnlCenter, pnlSouth;
     JLabel lblHeading;
@@ -23,6 +15,7 @@ public class DashboardPage  extends JFrame implements ActionListener{
     Font ftHead;
 
     public DashboardPage() {
+
         frame = new JFrame("Restaurant Management System");
         pnlNorth = new JPanel();
         pnlCenter = new JPanel();
@@ -34,6 +27,7 @@ public class DashboardPage  extends JFrame implements ActionListener{
         btnSupplies = new JButton("Supplies");
         btnOrders = new JButton("Orders");
         btnReservations = new JButton("Reservations");
+        btnRestaurant = new JButton("Restaurant Info");
         btnLock = new JButton("Lock");
         ftHead = new Font(Font.SANS_SERIF, Font.BOLD, 25);
 
@@ -71,6 +65,9 @@ public class DashboardPage  extends JFrame implements ActionListener{
         box.add(Box.createRigidArea(new Dimension(0, 20)));
         btnSupplies.setAlignmentX(Component.CENTER_ALIGNMENT);
         box.add(btnSupplies);
+        box.add(Box.createRigidArea(new Dimension(0, 20)));
+        btnRestaurant.setAlignmentX(Component.CENTER_ALIGNMENT);
+        box.add(btnRestaurant);
 
         pnlSouth.add(btnLock);
 
@@ -99,6 +96,15 @@ public class DashboardPage  extends JFrame implements ActionListener{
             public void actionPerformed(ActionEvent e) {
 
 
+                frame.dispose();
+            }
+        });
+
+        btnRestaurant.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                new RestaurantInfoPage();
                 frame.dispose();
             }
         });
