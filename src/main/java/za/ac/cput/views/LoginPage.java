@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class LoginPage extends JFrame {
@@ -105,12 +106,13 @@ public class LoginPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String url = "jdbc:mysql://localhost:3306/rms";
+                String url = "jdbc:mysql://localhost:3306/thechowloungedb";
                 String user = "root";
                 String pass = "password";
 
                 try{
 
+                    //Class.forName("com.mysql.jdbc.Driver");
                     java.sql.Connection myConn = DriverManager.getConnection(url, user, pass);
 
                     String Username = txtUsername.getText();
@@ -123,7 +125,7 @@ public class LoginPage extends JFrame {
                     ResultSet result = myStat.executeQuery(sql);
 
                     if (result.next()){
-                        //new dash();
+                        new DashboardPage();
                         frame.dispose();
                         JOptionPane.showMessageDialog(null, "Password correct");
                     }
@@ -136,8 +138,8 @@ public class LoginPage extends JFrame {
 
                     myConn.close();
                 }
-                catch(Exception ex) {
-                    System.out.println(ex.getMessage());
+                catch(SQLException a) {
+                    a.printStackTrace();
                 }
             }
         });

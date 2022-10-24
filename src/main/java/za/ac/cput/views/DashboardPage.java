@@ -11,7 +11,7 @@ public class DashboardPage  extends JFrame {
     JPanel pnlNorth, pnlCenter, pnlSouth;
     JLabel lblHeading;
     Box box;
-    JButton btnStaff, btnMenu, btnSupplies, btnOrders, btnReservations, btnLock;
+    JButton btnStaff, btnMenu, btnSupplies, btnOrders, btnReservations, btnRestaurant, btnLock;
     Font ftHead;
 
     public DashboardPage() {
@@ -27,6 +27,7 @@ public class DashboardPage  extends JFrame {
         btnSupplies = new JButton("Supplies");
         btnOrders = new JButton("Orders");
         btnReservations = new JButton("Reservations");
+        btnRestaurant = new JButton("Restaurant Info");
         btnLock = new JButton("Lock");
         ftHead = new Font(Font.SANS_SERIF, Font.BOLD, 25);
 
@@ -64,6 +65,9 @@ public class DashboardPage  extends JFrame {
         box.add(Box.createRigidArea(new Dimension(0, 20)));
         btnSupplies.setAlignmentX(Component.CENTER_ALIGNMENT);
         box.add(btnSupplies);
+        box.add(Box.createRigidArea(new Dimension(0, 20)));
+        btnRestaurant.setAlignmentX(Component.CENTER_ALIGNMENT);
+        box.add(btnRestaurant);
 
         pnlSouth.add(btnLock);
 
@@ -91,6 +95,15 @@ public class DashboardPage  extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
+                frame.dispose();
+            }
+        });
+
+        btnRestaurant.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                new RestaurantInfoPage();
                 frame.dispose();
             }
         });
