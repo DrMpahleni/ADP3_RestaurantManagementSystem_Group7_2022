@@ -106,7 +106,7 @@ public class LoginPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String url = "jdbc:mysql://localhost:3306/thechowloungedb";
+                String url = "jdbc:mysql://localhost:3306/thechowloungedatabase";
                 String user = "root";
                 String pass = "password";
 
