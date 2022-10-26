@@ -9,16 +9,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
 public class ReservationPage extends JFrame implements ActionListener {
 
 
-    public static final MediaType JSON = MediaType.get("application/json;charset=utf-8");
-    private static OkHttpClient client = new OkHttpClient();
-
     private JPanel panelNorth, panelCenter, panelSouth;
-
+    private JFrame frame;
     private JLabel lblTitle, lblName, lblDate, lblAmount, lblPeoplePax, lblTblNum;
     private JTextField txtName, txtDate, txtAmount, txtPeoplePax, txtTblNum;
     private JLabel lblRequiredName, lblRequiredDate, lblRequiredAmount, lblRequiredPeoplePax, lblRequiredTblNum;
@@ -29,6 +29,7 @@ public class ReservationPage extends JFrame implements ActionListener {
 
     public ReservationPage() {
         super("Restaurant Management System");
+        frame = new JFrame();
         panelNorth = new JPanel();
         panelNorth.setBackground(Color.white);
         panelCenter = new JPanel();
@@ -77,8 +78,9 @@ public class ReservationPage extends JFrame implements ActionListener {
 
     public void setGUI() {
         panelNorth.setLayout(new GridLayout(1, 1));
-        panelCenter.setLayout(new GridLayout(6, 6));
+        panelCenter.setLayout(new GridLayout(7, 3));
         panelSouth.setLayout(new GridLayout(1, 3));
+        panelNorth.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 
         lblTitle.setFont(ftTitle);
@@ -100,15 +102,23 @@ public class ReservationPage extends JFrame implements ActionListener {
         panelNorth.add(lblTitle);
         panelCenter.add(lblName);
         panelCenter.add(txtName);
+        panelCenter.add(lblRequiredName);
 
         panelCenter.add(lblDate);
         panelCenter.add(txtDate);
+        panelCenter.add(lblRequiredDate);
+
         panelCenter.add(lblAmount);
         panelCenter.add(txtAmount);
+        panelCenter.add(lblRequiredAmount);
+
         panelCenter.add(lblPeoplePax);
         panelCenter.add(txtPeoplePax);
+        panelCenter.add(lblRequiredPeoplePax);
+
         panelCenter.add(lblTblNum);
         panelCenter.add(txtTblNum);
+        panelCenter.add(lblRequiredTblNum);
 
 
         panelSouth.add(btnReserve);
@@ -131,9 +141,60 @@ public class ReservationPage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Create")) {
-            reservation(txtName.getText(),txtDate.getText(), txtAmount.getText(), txtPeoplePax.getText(), txtTblNum.getText());
-            JOptionPane.showMessageDialog(null, "Reservation has been created!");
+        if (e.getActionCommand().equals("Make a reservation")) {
+
+            if ((txtName.getText().length() == 0) || (txtDate.getText().length() == 0) || (txtAmount.getText().length() == 0) || (txtPeoplePax.getText().length() == 0) || (txtTblNum.getText().length() == 0)) {
+
+                lblRequiredName.setVisible(true);
+                lblRequiredDate.setVisible(true);
+                lblRequiredAmount.setVisible(true);
+                lblRequiredPeoplePax.setVisible(true);
+                lblRequiredTblNum.setVisible(true);
+
+
+            } else {
+
+
+                String url = "jdbc:mysql://localhost:3306/thechowloungedatabase";
+                String user = "root";
+                String pass = "password";
+
+                String name = txtName.getText();
+                String date = txtDate.getText();
+                String amount = txtAmount.getText();
+                String peoplePax = txtPeoplePax.getText();
+                String tblNum = txtTblNum.getText();
+
+                try{
+
+                    java.sql.Connection myConn = DriverManager.getConnection(url, user, pass);
+
+                    Statement myStat = myConn.createStatement();
+
+                String sql = "INSERT INTO reservation values ( '" + name + "', '" + date + "','" + amount + "','" + peoplePax + "','" + tblNum + "')";
+
+                myStat.executeUpdate(sql);
+
+                JOptionPane.showMessageDialog(null, "Welcome " + name + " ,your reservation has been created!");
+
+                myConn.close();
+                new ReservationPage();
+                frame.dispose();
+
+
+            }
+                catch(Exception ex){
+                System.out.println(ex);
+
+                JOptionPane.showMessageDialog(rootPane, "Your reservation has been made ");
+
+                if ((txtName.getText().length() == 0) || (txtDate.getText().length() == 0) || (txtAmount.getText().length() == 0) || (txtPeoplePax.getText().length() == 0) || (txtTblNum.getText().length() == 0)) {
+                    JOptionPane.showMessageDialog(null, "Your info is incomplete");
+                }
+
+            }
+        }
+
 
         } else if (e.getActionCommand().equals("Clear")) {
             txtName.setText("");
@@ -141,6 +202,16 @@ public class ReservationPage extends JFrame implements ActionListener {
             txtAmount.setText("");
             txtPeoplePax.setText("");
             txtTblNum.setText("");
+            txtName.requestFocus();
+            if ((txtName.getText().length() == 0) || (txtDate.getText().length() == 0) || (txtAmount.getText().length() == 0) || (txtPeoplePax.getText().length() == 0) || (txtTblNum.getText().length() == 0)) {
+                JOptionPane.showMessageDialog(null, "Your info is incomplete");
+
+                lblRequiredName.setVisible(true);
+                lblRequiredDate.setVisible(true);
+                lblRequiredAmount.setVisible(true);
+                lblRequiredPeoplePax.setVisible(true);
+                lblRequiredTblNum.setVisible(true);
+            }
 
         } else if (e.getActionCommand().equals("Exit")) {
             System.exit(0);
@@ -148,33 +219,7 @@ public class ReservationPage extends JFrame implements ActionListener {
         }
     }
 
-    public void reservation(String name, String date, String amount, String peoplePax, String tblNum ) {
-        try {
-            final String URL = "http://localhost:8080/reservation/create";
-            Reservation reservation = new ReservationFactory().createReservation(name, date, amount, peoplePax, tblNum);
-            Gson g = new Gson();
-            String jsonString = g.toJson(reservation);
-            String s = post(URL, jsonString);
-            if (s != null)
-                JOptionPane.showMessageDialog(null, "Reservation has been created!");
-            else
-                JOptionPane.showMessageDialog(null, "Reservation not created");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }
 
-
-    public String post(final String url, String json) throws IOException {
-        RequestBody body = RequestBody.create(JSON,json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
-        }
-    }
     public static void main(String [] args){
         new ReservationPage().setGUI();
 
