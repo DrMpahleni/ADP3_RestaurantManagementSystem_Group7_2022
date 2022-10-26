@@ -90,6 +90,37 @@ public class DashboardPage  extends JFrame {
             }
         });
 
+        btnReservations.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ReservationPage();
+                frame.dispose();
+            }
+        });
+
+        btnOrders.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new OrderPage();
+                frame.dispose();
+            }
+        });
+
+        btnStaff.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new EmployeePage();
+                frame.dispose();
+            }
+        });
+
+        btnSupplies.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new supplierPage();
+                frame.dispose();
+            }
+        });
 
         btnLock.addActionListener(new ActionListener() {
             @Override
