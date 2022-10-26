@@ -120,7 +120,7 @@ public class LoginPage extends JFrame {
 
                     Statement myStat = myConn.createStatement();
 
-                    String sql = "SELECT user_Name, user_Password FROM user_account WHERE user_Name ='"+Username+"'and user_Password ='"+Password+"'";
+                    String sql = "SELECT user_Name, user_Pasword FROM user_account WHERE user_Name ='"+Username+"'and user_Pasword ='"+Password+"'";
                     
                     ResultSet result = myStat.executeQuery(sql);
 
