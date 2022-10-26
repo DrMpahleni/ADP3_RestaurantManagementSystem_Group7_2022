@@ -94,7 +94,7 @@ public class DashboardPage  extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ReservationPage();
-                frame.dispose();
+                //frame.dispose();
             }
         });
 

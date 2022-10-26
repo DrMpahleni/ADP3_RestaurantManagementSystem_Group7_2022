@@ -135,7 +135,7 @@ public class OrderPage extends JFrame {
         btnPayment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // new ;
+                new PaymentPage();
             }
         });
 
