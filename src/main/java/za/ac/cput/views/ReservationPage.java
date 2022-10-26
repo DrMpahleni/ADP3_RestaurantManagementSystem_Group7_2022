@@ -73,6 +73,7 @@ public class ReservationPage extends JFrame implements ActionListener {
         ftMain = new Font("Arial", Font.PLAIN, 15);
         ftRequired = new Font("Italic", Font.BOLD, 12);
 
+        this.setGUI();
 
     }
 
@@ -221,7 +222,7 @@ public class ReservationPage extends JFrame implements ActionListener {
 
 
     public static void main(String [] args){
-        new ReservationPage().setGUI();
+        new ReservationPage();
 
     }
 
