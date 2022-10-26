@@ -76,25 +76,25 @@ public class RestaurantInfoPage extends JFrame {
     public void getData() {
 
         DefaultTableModel DTMRes = new DefaultTableModel();
-        Object[] coloumn = {"ID", "Name", "Street", "Suburb", "City", "Province", "zip Code", "Phone"};
+        Object[] coloumn = {"Name", "Street", "Suburb", "City", "Province", "zip Code", "Phone"};
         DTMRes.setColumnIdentifiers(coloumn);
         tblRes.setModel(DTMRes);
 
-        String url = "jdbc:mysql://localhost:3306/thechowloungedb";
+        String url = "jdbc:mysql://localhost:3306/thechowloungedatabase";
         String user = "root";
         String pass = "password";
 
         try{
             Connection myConn = DriverManager.getConnection(url, user, pass);
             Statement myStat = myConn.createStatement();
-            String sql = "SELECT * FROM restaurantinfo";
+            String sql = "SELECT * FROM restaurant";
             ResultSet rs = myStat.executeQuery(sql);
 
             while (rs.next()) {
-                Object d[] = {rs.getInt("res_id"), rs.getString("res_name"),
-                        rs.getString("res_StreetAddress"), rs.getString("res_Suburb"),
-                        rs.getString("res_City"), rs.getString("res_Province"),
-                        rs.getInt("res_zipCode"), rs.getInt("res_Phone")};
+                Object d[] = {rs.getString("name"),
+                        rs.getString("street_address"), rs.getString("suburb"),
+                        rs.getString("city"), rs.getString("province"),
+                        rs.getInt("zip_code"), rs.getInt("phone")};
                 DTMRes.addRow(d);
             }
         } catch (SQLException a){

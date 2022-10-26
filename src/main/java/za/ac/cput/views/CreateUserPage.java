@@ -107,7 +107,7 @@ public class CreateUserPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String url = "jdbc:mysql://localhost:3306/rms";
+                String url = "jdbc:mysql://localhost:3306/thechowloungedatabase";
                 String user = "root";
                 String pass = "password";
 

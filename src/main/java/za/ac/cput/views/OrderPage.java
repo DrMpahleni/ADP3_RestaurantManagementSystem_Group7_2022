@@ -22,7 +22,7 @@ public class OrderPage extends JFrame {
     JScrollPane scrollOrder;
     JLabel lblHead;
 
-    JButton btnAdd,btnDisplay, btnDelete, btnBack;
+    JButton btnAdd,btnDisplay, btnDelete, btnPayment, btnBack;
     Font ftHead;
     String[] columnNames = {"Order Id", "Order Item", "Date", "Amount"};
     Object[][] tblData = {{null, null, null,null}};
@@ -42,6 +42,7 @@ public class OrderPage extends JFrame {
         btnAdd = new JButton("Add");
         btnDisplay = new JButton("Display Order");
         btnDelete = new JButton("Delete");
+        btnPayment = new JButton("Payment");
         btnBack = new JButton("Return");
         ftHead = new Font(Font.SANS_SERIF, Font.BOLD, 25);
 
@@ -71,6 +72,7 @@ public class OrderPage extends JFrame {
 
         pnlSouth.add(btnAdd);
         pnlSouth.add(btnDisplay);
+        pnlSouth.add(btnPayment);
         pnlSouth.add(btnDelete);
         pnlSouth.add(btnBack);
 
@@ -92,7 +94,7 @@ public class OrderPage extends JFrame {
                 mdlTable.setColumnIdentifiers(column);
                 tblRestaurant_Order.setModel(mdlTable);
 
-                String url = "jdbc:mysql://localhost:3306/thechowloungedb";
+                String url = "jdbc:mysql://localhost:3306/thechowloungedatabase";
                 String user = "root";
                 String pass = "password";
 
@@ -127,6 +129,13 @@ public class OrderPage extends JFrame {
                 else{
                     System.out.println("Delete Error");
                 }
+            }
+        });
+
+        btnPayment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               // new ;
             }
         });
 
