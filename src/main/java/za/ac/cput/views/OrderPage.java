@@ -22,7 +22,7 @@ public class OrderPage extends JFrame {
     JScrollPane scrollOrder;
     JLabel lblHead;
 
-    JButton btnAdd,btnDisplay, btnDelete, btnPayment, btnBack;
+    JButton btnDisplay, btnDelete, btnPayment, btnBack;
     Font ftHead;
     String[] columnNames = {"Order Id", "Order Item", "Date", "Amount"};
     Object[][] tblData = {{null, null, null,null}};
@@ -34,12 +34,10 @@ public class OrderPage extends JFrame {
         pnlCenter = new JPanel();
         pnlSouth = new JPanel();
 
-
         tblRestaurant_Order = new JTable(tblData, columnNames);
         mdlTable = new DefaultTableModel();
         scrollOrder = new JScrollPane(tblRestaurant_Order);
         lblHead = new JLabel(" Manage Orders ");
-        btnAdd = new JButton("Add");
         btnDisplay = new JButton("Display Order");
         btnDelete = new JButton("Delete");
         btnPayment = new JButton("Payment");
@@ -63,14 +61,15 @@ public class OrderPage extends JFrame {
         frame.add(BorderLayout.CENTER, pnlCenter);
         frame.add(BorderLayout.SOUTH, pnlSouth);
 
+        pnlNorth.setBackground(new Color(129, 133, 133));
+        pnlCenter.setBackground(new Color(129, 133, 133));
+        pnlSouth.setBackground(new Color(129, 133, 133));
+
         pnlNorth.add(lblHead);
-
-
 
         pnlCenter.add(tblRestaurant_Order.getTableHeader(), BorderLayout.PAGE_START);
         pnlCenter.add(scrollOrder,BorderLayout.CENTER);
 
-        pnlSouth.add(btnAdd);
         pnlSouth.add(btnDisplay);
         pnlSouth.add(btnPayment);
         pnlSouth.add(btnDelete);
@@ -120,14 +119,26 @@ public class OrderPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // i = the index of the selected row
-                int i = tblRestaurant_Order.getSelectedRow();
-                if(i >= 0){
-                    // remove a row from jtable
-                    mdlTable.removeRow(i);
+                mdlTable.setColumnIdentifiers(column);
+                tblRestaurant_Order.setModel(mdlTable);
+
+                String url = "jdbc:mysql://localhost:3306/thechowloungedatabase";
+                String user = "root";
+                String pass = "password";
+
+                try {
+                    java.sql.Connection myConn = DriverManager.getConnection(url,user, pass);
+                    Statement mySat = myConn.createStatement();
+                    String sql = "DELETE * FROM restaurant_Order";
+                    ResultSet rs = mySat.executeQuery(sql);
+                    while(rs.next()) {
+                        Object d[] = {rs.getString("Order Id"), rs.getString("Order Item"), rs.getString(" Date "), rs.getString(" Amount")};
+                        mdlTable.addRow(d);
+                    }
+
                 }
-                else{
-                    System.out.println("Delete Error");
+                catch (Exception ex) {
+                    System.out.println(ex);
                 }
             }
         });
